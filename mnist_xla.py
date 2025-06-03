@@ -15,6 +15,13 @@ from torch_xla import runtime as xr
 import torch_xla.distributed.spmd as xs
 import os
 
+import torch_xla.debug.profiler as xp
+
+os.environ["XLA_IR_DEBUG"] = "1"
+os.environ["XLA_HLO_DEBUG"] = "1"
+
+server = xp.start_server(9012)
+
 # Enable the SPMD
 xr.use_spmd()
 
@@ -26,9 +33,6 @@ conv_mesh = xs.Mesh(device_ids, conv_mesh_shape, ('data', 'dim1', 'dim2', 'dim3'
 
 linear_mesh_shape = (int(num_devices/2), 2)
 linear_mesh = xs.Mesh(device_ids, linear_mesh_shape, ('data', 'model'))
-
-os.environ["XLA_IR_DEBUG"] = "1"
-os.environ["XLA_HLO_DEBUG"] = "1"
 
 # Define the CNN Model
 class MNISTNet(nn.Module):
@@ -114,3 +118,4 @@ def train_mnist():
 
 if __name__ == '__main__':
     train_mnist()
+    xp.stop_trace()
