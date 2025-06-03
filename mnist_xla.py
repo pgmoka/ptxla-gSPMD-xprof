@@ -20,7 +20,6 @@ import torch_xla.debug.profiler as xp
 os.environ["XLA_IR_DEBUG"] = "1"
 os.environ["XLA_HLO_DEBUG"] = "1"
 
-server = xp.start_server(9012)
 
 # Enable the SPMD
 xr.use_spmd()
@@ -117,5 +116,6 @@ def train_mnist():
     print("Training finished!")
 
 if __name__ == '__main__':
+    server = xp.start_server(9012)
     train_mnist()
     xp.stop_trace()
