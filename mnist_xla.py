@@ -116,6 +116,7 @@ def train_mnist():
     print("Training finished!")
 
 if __name__ == '__main__':
+    xp.start_trace("<trace repo>") # You must add you tracing repo here.
     server = xp.start_server(9012)
     train_mnist()
     xp.stop_trace()
