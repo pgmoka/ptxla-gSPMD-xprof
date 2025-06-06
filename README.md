@@ -6,4 +6,4 @@ To set-up your environment, follow the steps in https://github.com/pytorch/xla/b
 
 You can then follow the steps in https://cloud.google.com/tpu/docs/pytorch-xla-performance-profiling-tpu-vm to capture the profile generated, and analyze the model.
 
-Note that this toy example is not particularly optimized, and aims primarily to serve as an example. In my case, I ran in a v6e-8 TPU.
+Note that this toy example is not particularly optimized, and aims primarily to serve as an example. In my case, I ran in a v6e-8 TPU, but it it an example not bound by any particular TPU.
