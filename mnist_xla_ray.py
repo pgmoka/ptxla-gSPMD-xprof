@@ -27,7 +27,6 @@ os.environ["XLA_HLO_DEBUG"] = "1"
 
 
 # Enable the SPMD
-ray.init()
 # xr.use_spmd()
 
 # Declare mesh meshes
@@ -123,10 +122,17 @@ def train_mnist():
     print("Training finished!")
 
 if __name__ == '__main__':
+  ray.init()
+  scaling_config = ScalingConfig(
+          num_workers=8,
+          use_gpu=False, # We are using TPUs, not GPUs
+          _max_cpu_per_worker=4, # Adjust based on your needs
+      )
   trainer = TorchTrainer(
       train_mnist,
       torch_config=TorchXLAConfig(),
-      scaling_config=ScalingConfig(num_workers=1, use_gpu=False)
+      scaling_config=scaling_config
   )
   results = trainer.fit()
   print(results)
+  train_mnist()
